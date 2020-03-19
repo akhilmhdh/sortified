@@ -1,0 +1,14 @@
+.sortAppContainer {
+  flex: 1;
+  display: flex;
+  justify-content: center;
+  align-items: flex-end;
+  padding: 10px;
+
+  .bars {
+    margin-left: 5px;
+    width: 10px;
+    background-color: red;
+    transition: 0.5s;
+  }
+}

@@ -1,26 +1,30 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import React,{Component} from 'react';
+import './App.scss';
+import HeaderApp from './components/HeaderApp/headerApp';
+import MenuApp from './components/MenuApp/menuApp';
+import SortApp from './components/SortApp/sortApp';
 
-function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+class App extends Component{
+  constructor(props){
+    super(props);
+    this.state=({arrayElements:4})
+  }
+  render(){
+    return (
+      <div className="App">
+        <HeaderApp/>
+        <MenuApp
+        arrayElements={this.state.arrayElements}
+        changeArrayElements={(el)=>{this.setState({arrayElements:el})}}
+        generateRandomEl={()=>this.refs.sortContainer.genRandomEl()}
+        />
+        <SortApp
+          arrayElements={this.state.arrayElements}
+          ref="sortContainer"
+        />
+      </div>
+    );
+  }
 }
 
 export default App;
