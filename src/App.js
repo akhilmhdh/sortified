@@ -17,6 +17,7 @@ class App extends Component{
         arrayElements={this.state.arrayElements}
         changeArrayElements={(el)=>{this.setState({arrayElements:el})}}
         generateRandomEl={()=>this.refs.sortContainer.genRandomEl()}
+        selectAlgo={(el)=>{this.refs.sortContainer.selectAlgo(el)}}
         />
         <SortApp
           arrayElements={this.state.arrayElements}
