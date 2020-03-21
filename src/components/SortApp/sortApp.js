@@ -60,6 +60,7 @@ class SortApp extends Component{
                 const shallowCopy=[...this.state.elements];
                 try{
                 this.state.logs[frame].elements.forEach((el)=>this.myRef.current.childNodes[el].style.backgroundColor="blue")
+                new Promise(resolve => setTimeout(resolve, 100));
                 this.state.logs[frame].elements.forEach((el)=>this.myRef.current.childNodes[el].style.backgroundColor="yellow")
                 }
                 catch(err){
@@ -68,6 +69,17 @@ class SortApp extends Component{
                 [shallowCopy[this.state.logs[frame].elements[1]],shallowCopy[this.state.logs[frame].elements[0]]]=
                 [shallowCopy[this.state.logs[frame].elements[0]],shallowCopy[this.state.logs[frame].elements[1]]]
                 this.setState({elements:shallowCopy})
+                prevData=this.state.logs[frame].elements;
+                break
+            case 'change':
+                const changeCopy=[...this.state.elements];
+                try{
+                    changeCopy[this.state.logs[frame].elements[0]]=this.state.logs[frame].elements[1];
+                }
+                catch(err){
+                    console.log(err,this.state.logs[frame].elements)
+                }
+                this.setState({elements:changeCopy})
                 break
             default:
                 console.log("ended")             

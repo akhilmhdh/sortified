@@ -6,7 +6,7 @@ class MenuApp extends Component{
     constructor(props){
         super(props)
         this.state=({algo:"",sortingAlgos:[
-            "Insertion Sort","Bubble Sort","Merge Sort"
+            "Insertion Sort","Bubble Sort","Heap Sort","Merge Sort","Quick Sort"
         ]})
     }
 
