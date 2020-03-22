@@ -3,19 +3,27 @@ import React,{Component} from 'react';
 import{Algorithm} from '../Algorithm/algorithm'
 
 import "./sortAppStyle.scss"
-
-let frame=0,prevData=[];
+import Controller from '../Controller/controller';
+import SortVisualizer from '../SortVisulizer/sortVisualizer';
 class SortApp extends Component{
     constructor(props){
         super(props);
-        this.state=({elements:Array(this.props.arrayElements)
-            .fill(0).map(el=>Math.floor(Math.random() * 500)),
-       logs:[],algo:'',
-        sorted:[]})
+        this.state=({
+            elements:Array(this.props.arrayElements).fill(0).map(el=>Math.floor(Math.random() * 500)),
+            logs:[],
+            algo:'',
+            sorted:[],
+            frameSpeed:1000,
+            frame:0})
        this.startAnimation=this.startAnimation.bind(this); 
        this.myRef=React.createRef();
+       this.prevData=[]
     }
-    //this.myRef.current.childNodes[0].style.backgroundColor="green";
+
+    componentDidMount(){
+        this.selectAlgo("Merge Sort")
+    }
+
     componentDidUpdate(pastProps,pastState){
         if(this.props.arrayElements>pastProps.arrayElements){
             const tempArray=Array(this.props.arrayElements-pastProps.arrayElements)
@@ -40,86 +48,90 @@ class SortApp extends Component{
     selectAlgo(el){
         if(this.state.algo!==el) this.setState({algo:el});
         const [log,list]=Algorithm(el,[...this.state.elements])
-        frame=0
+        this.setState({frame:0})
         this.setState({logs:log,sorted:list})
     }
-    animate(frame){
-        prevData.forEach((el,index)=>el!==this.state.logs[frame].elements[index] && prevData.length
-        ?this.myRef.current.childNodes[el].style.backgroundColor="red":null);
-        
-        switch (this.state.logs[frame].operation){
-            case 'update':
-                try {
-                    this.state.logs[frame].elements.forEach((el)=>{this.myRef.current.childNodes[el].style.backgroundColor="blue"});
-                    prevData=this.state.logs[frame].elements;
-                } catch (error) {
-                    console.log(error,this.state.logs[frame].elements)
-                }
-                break;
-            case 'swap':
-                const shallowCopy=[...this.state.elements];
-                try{
-                this.state.logs[frame].elements.forEach((el)=>this.myRef.current.childNodes[el].style.backgroundColor="blue")
-                new Promise(resolve => setTimeout(resolve, 100));
-                this.state.logs[frame].elements.forEach((el)=>this.myRef.current.childNodes[el].style.backgroundColor="yellow")
-                }
-                catch(err){
-                    console.log(err,this.state.logs[frame].elements)
-                }
-                [shallowCopy[this.state.logs[frame].elements[1]],shallowCopy[this.state.logs[frame].elements[0]]]=
-                [shallowCopy[this.state.logs[frame].elements[0]],shallowCopy[this.state.logs[frame].elements[1]]]
-                this.setState({elements:shallowCopy})
-                prevData=this.state.logs[frame].elements;
-                break
-            case 'change':
-                const changeCopy=[...this.state.elements];
-                try{
-                    changeCopy[this.state.logs[frame].elements[0]]=this.state.logs[frame].elements[1];
-                }
-                catch(err){
-                    console.log(err,this.state.logs[frame].elements)
-                }
-                this.setState({elements:changeCopy})
-                break
-            default:
-                console.log("ended")             
-        }
+    animate(){
+        try {
+            this.prevData.forEach((el,index)=>el!==this.state.logs[this.state.frame].elements[index] && this.prevData.length
+            ?this.myRef.current.childNodes[el].style.backgroundColor="red":null);
+
+                switch (this.state.logs[this.state.frame].operation){
+                    case 'update':
+                        this.state.logs[this.state.frame].elements.forEach((el)=>this.myRef.current.childNodes[el].style.backgroundColor="blue");
+                        this.prevData=this.state.logs[this.state.frame].elements;
+                        break;
+                        
+                    case 'swap':
+                        const shallowCopy=[...this.state.elements];
+                        this.state.logs[this.state.frame].elements.forEach((el)=>this.myRef.current.childNodes[el].style.backgroundColor="blue")
+                        new Promise(resolve => setTimeout(resolve, 100));
+                        this.state.logs[this.state.frame].elements.forEach((el)=>this.myRef.current.childNodes[el].style.backgroundColor="yellow");
+                        [shallowCopy[this.state.logs[this.state.frame].elements[1]],shallowCopy[this.state.logs[this.state.frame].elements[0]]]=
+                        [shallowCopy[this.state.logs[this.state.frame].elements[0]],shallowCopy[this.state.logs[this.state.frame].elements[1]]];
+                        this.setState({elements:shallowCopy});
+                        this.prevData=this.state.logs[this.state.frame].elements;
+                        break
+
+                    case 'change':
+                        const changeCopy=[...this.state.elements];
+                        changeCopy[this.state.logs[this.state.frame].elements[0]]=this.state.logs[this.state.frame].elements[1];
+                        this.setState({elements:changeCopy});
+                        break
+
+                    case 'sorted':
+                        this.prevData=[]
+                        this.myRef.current.childNodes.forEach((el,index)=>{
+                            el.style.backgroundColor="green";this.prevData.push(index)});
+                        break;
+
+                    default:
+                        console.log("ended")             
+            }
+        } catch (error) {}
     }
     startAnimation(){
         this.animation=setInterval(()=>{
-            if(frame<this.state.logs.length){
-                //console.log(this.state.logs[frame])
-                this.animate(frame)
-                frame++
+            if(this.state.frame<this.state.logs.length){
+                //console.log(this.state.logs[this.state.frame])
+                this.animate(this.state.frame)
+                this.setState({frame:this.state.frame+1})
+                this.setState({frame1:this.state.frame1+1})
             }
             else{
                 clearInterval(this.animation);
                 console.log("ended")
             }
-        },1)
+        },this.state.frameSpeed)
+    }
+    goPrevFrame(){
+        clearInterval(this.animation);
+        if(this.state.fame<0){this.setState({frame:0})}
+        else{this.setState({frame:this.state.frame-1})};
+        this.animate(this.state.fame);
+    }
+    goNextFrame(){
+        clearInterval(this.animation);
+        if(this.state.fame>this.state.logs.length){this.setState({frame:this.state.log.length-1})}
+        else{this.setState({frame:this.state.frame+1})};
+        this.animate(this.state.fame);
     }
     render(){
         return(
             <div className="sortAppContainer">
                 <div className="sortAppVisual" ref={this.myRef}>
-                {this.state.elements.map((el,index)=>{
-                    return(
-                    <div key={index}
-                    style={{height:`${el}px`}}
-                    className="bars"/>
-                    )
-                })}
+                    <SortVisualizer
+                    elements={this.state.elements}/>
                 </div>
-                <div>
-                    <div onClick={this.startAnimation}
-                    >|></div>
-                    <div onClick={()=>{clearInterval(this.animation)}}
-                    >||</div>
-                    <div>
-                        <div>&lt;</div>
-                        <div>&gt;</div>
-                    </div>
-                </div>
+               <Controller
+               startAnimation={()=>this.startAnimation()}
+               stopAnimation={()=>{clearInterval(this.animation)}}
+               goPrevFrame={()=>this.goPrevFrame()}
+               goNextFrame={()=>this.goNextFrame()}
+               setSpeed={(el)=>{this.setState({frameSpeed:el},
+                ()=>{clearInterval(this.animation)})}}
+               currentFrame={this.state.frame}
+               totalFrames={this.state.logs.length}/>
             </div>
         )
 

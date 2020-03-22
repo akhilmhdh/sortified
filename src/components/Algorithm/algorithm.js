@@ -29,5 +29,6 @@ export const Algorithm=(name,list)=>{
         default:
             list=insertionSort(update,swap,list);
     }
+    logs=[...logs,{operation:'sorted',elements:"all"}]
     return([logs,list]);
 }

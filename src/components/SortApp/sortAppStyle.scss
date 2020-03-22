@@ -3,17 +3,21 @@
   display: flex;
   flex-direction: column;
   justify-content: center;
-  padding: 10px;
+  padding-top: 10px;
+  overflow: hidden;
 
   .sortAppVisual {
     display: flex;
     justify-content: center;
     align-items: flex-end;
+    flex: 1;
+    overflow: hidden;
   }
 
   .bars {
-    margin-left: 5px;
-    width: 10px;
+    width: 100%;
+    min-width: 2.5px;
+    max-width: 40px;
     background-color: red;
     transition: 0.1s;
   }

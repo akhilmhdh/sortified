@@ -1,8 +1,10 @@
 import React from 'react';
+import "./headerStyle.scss"
+
 
 const HeaderApp=()=>{
-    return(<div>
-        Header
+    return(<div className="headerContainer">
+    Sortified
     </div>)
 }
 
