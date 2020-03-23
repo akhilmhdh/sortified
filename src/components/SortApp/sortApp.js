@@ -55,10 +55,11 @@ class SortApp extends Component{
         this.setState({logs:log,sorted:list})
     }
     animate(){
-        try {
+        try{
             this.prevData.forEach((el,index)=>el!==this.state.logs[this.state.frame].elements[index] && this.prevData.length
             ?this.myRef.current.childNodes[el].style.backgroundColor="#ec5b1d":null);
-
+        }catch(err){}
+            try {
                 switch (this.state.logs[this.state.frame].operation){
                     case 'update':
                         this.state.logs[this.state.frame].elements.forEach((el)=>this.myRef.current.childNodes[el].style.backgroundColor="#1dbac2");
@@ -67,7 +68,7 @@ class SortApp extends Component{
                         
                     case 'swap':
                         const shallowCopy=[...this.state.elements];
-                        this.state.logs[this.state.frame].elements.forEach((el)=>this.myRef.current.childNodes[el].style.backgroundColor="blue")
+                        this.state.logs[this.state.frame].elements.forEach((el)=>this.myRef.current.childNodes[el].style.backgroundColor="#1dbac2")
                         new Promise(resolve => setTimeout(resolve, 100));
                         this.state.logs[this.state.frame].elements.forEach((el)=>this.myRef.current.childNodes[el].style.backgroundColor="yellow");
                         [shallowCopy[this.state.logs[this.state.frame].elements[1]],shallowCopy[this.state.logs[this.state.frame].elements[0]]]=
@@ -85,13 +86,13 @@ class SortApp extends Component{
                     case 'sorted':
                         this.prevData=[]
                         this.myRef.current.childNodes.forEach((el,index)=>{
-                            el.style.backgroundColor="green";this.prevData.push(index)});
+                            el.style.backgroundColor="#B6935C";this.prevData.push(index)});
                         break;
 
                     default:
                         console.log("ended")             
             }
-        } catch (error) {}
+        }catch(error){}
     }
     startAnimation(){
         this.animation=setInterval(()=>{
