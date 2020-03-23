@@ -25,10 +25,10 @@ class MenuApp extends Component{
                 <div className="btn">
                 <div className="randomButton">
                     <input type="button"
-                    onClick={(el)=>this.props.generateRandomEl()} value="Random"/>
+                    onClick={(el)=>this.props.generateRandomEl(this.state.algo)} value="Random"/>
                 </div>
                 <div className="dropdown">
-                    <select className="dropdown-content" onChange={(el)=>{this.props.selectAlgo(el.target.value)}}>
+                    <select className="dropdown-content" onClick={(el)=>{this.props.selectAlgo(el.target.value)}}>
                         {this.state.sortingAlgos.map((el,index)=>{
                             return(
                             <option key={index}>{el}</option>)

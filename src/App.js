@@ -16,7 +16,7 @@ class App extends Component{
         <MenuApp
         arrayElements={this.state.arrayElements}
         changeArrayElements={(el)=>{this.setState({arrayElements:el})}}
-        generateRandomEl={()=>this.refs.sortContainer.genRandomEl()}
+        generateRandomEl={(el)=>this.refs.sortContainer.genRandomEl(el)}
         selectAlgo={(el)=>{this.refs.sortContainer.selectAlgo(el)}}
         />
         <SortApp

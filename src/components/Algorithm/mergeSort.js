@@ -20,7 +20,7 @@ const merge=(update,swap,changeEl,start,mid,end)=>{
   if(list[mid]<=list[start2]) return;
 
   while(start<=mid && start2 <=end){
-    if(list[start] <= list[start2]) {start++;}
+    if(list[start] <= list[start2]) {start++;update(start,mid,start2)}
     else{
       const value=list[start2];
       let index=start2;

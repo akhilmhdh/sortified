@@ -22,9 +22,9 @@ function heap_root(input, i,update,swap) {
     var left = 2 * i + 1;
     var right = 2 * i + 2;
     var max = i;
-    update(max,i);
     if (left < array_length && input[left] > input[max]) {
         max = left;
+        
     }
     update(max,i);
     if (right < array_length && input[right] > input[max])     {
@@ -34,6 +34,7 @@ function heap_root(input, i,update,swap) {
     if (max !== i) {
         [input[max],input[i]]=[input[i],input[max]];
         swap(i,max);
+        update(max,i);
         heap_root(input, max,update,swap);
     }
     update(max,i);
