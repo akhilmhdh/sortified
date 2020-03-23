@@ -22,6 +22,7 @@ class MenuApp extends Component{
                     className="slider"/>
                     <output>{this.props.arrayElements}</output>
                 </div>
+                <div className="btn">
                 <div className="randomButton">
                     <input type="button"
                     onClick={(el)=>this.props.generateRandomEl()} value="Random"/>
@@ -33,6 +34,7 @@ class MenuApp extends Component{
                             <option key={index}>{el}</option>)
                         })}
                     </select>
+                </div>
                 </div>
         </div>)
     }

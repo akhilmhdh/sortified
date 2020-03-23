@@ -11,14 +11,22 @@
     justify-content: center;
     align-items: flex-end;
     flex: 1;
-    overflow: hidden;
+    overflow: auto;
+
+    @media screen and (max-device-width: 720px) {
+      justify-content: space-evenly;
+    }
   }
 
   .bars {
-    width: 100%;
-    min-width: 2.5px;
-    max-width: 40px;
     background-color: red;
     transition: 0.1s;
+    font-family: "poppins";
+    color: white;
+    font-weight: bolder;
+    display: flex;
+    justify-content: center;
+    align-items: flex-end;
+    padding: 2px;
   }
 }

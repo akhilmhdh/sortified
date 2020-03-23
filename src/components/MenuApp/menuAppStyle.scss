@@ -1,6 +1,7 @@
 .menuAppContainer {
   display: flex;
   justify-content: space-evenly;
+  flex-wrap: wrap;
   align-items: center;
   background-color: #2bbbad;
   padding: 15px;
@@ -42,6 +43,13 @@
   }
 }
 
+output {
+  padding: 5px;
+  color: white;
+  font-family: "poppins";
+  font-weight: bolder;
+}
+
 .randomButton {
   input {
     text-decoration: none;
@@ -67,13 +75,15 @@
 }
 
 .dropdown {
+  margin-left: 2.5px;
+
   select {
     border-radius: 0.5em;
     appearance: none;
     text-decoration: none;
     color: #2bbbad;
     background-color: white;
-    text-align: center;
+    text-align-last: center;
     letter-spacing: 0.5px;
     border: 1px #2bbbad solid;
     padding: 15px;
