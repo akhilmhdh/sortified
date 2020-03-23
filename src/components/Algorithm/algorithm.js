@@ -6,7 +6,6 @@ import { mergeSortHelper } from './mergeSort'
 
 export const Algorithm=(name,list)=>{
     let logs=[]
-    console.log(name)
     const update=(...el)=>{logs=[...logs,{operation:'update',elements:el}]}
     const swap=(pos,tar)=>{logs=[...logs,{operation:'swap',elements:[pos,tar]}]}
     const changeEl=(pos,value)=>{logs=[...logs,{operation:'change',elements:[pos,value]}]}
@@ -24,7 +23,7 @@ export const Algorithm=(name,list)=>{
             list=mergeSortHelper(update,swap,changeEl,list,0,list.length-1);
             break;
         case "Quick Sort":
-            console.log(quickSortHelper(update,swap,list,0,list.length-1))
+            list=quickSortHelper(update,swap,list,0,list.length-1);
             break;
         default:
             list=insertionSort(update,swap,list);

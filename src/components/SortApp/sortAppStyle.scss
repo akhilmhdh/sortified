@@ -3,7 +3,6 @@
   display: flex;
   flex-direction: column;
   justify-content: center;
-  padding-top: 10px;
   overflow: hidden;
 
   .sortAppVisual {
@@ -12,6 +11,7 @@
     align-items: flex-end;
     flex: 1;
     overflow: auto;
+    padding: 10px 10px 0 10px;
 
     @media screen and (max-device-width: 720px) {
       justify-content: space-evenly;
